@@ -41,7 +41,7 @@ public final class GoogleCloudDataplexV1TaskInfrastructureSpecVpcNetwork
   /**
    * Optional. Whether the compute resources allocated to run the job have internal/ private IPs. By
    * default, the VMs have a public IP. The value may be {@code null}.
-   * Note: As a part of Uld customization, we are overriding this to always use private IP
+   * Note: as a part of Uld customization, set this flag to true always
    */
   @com.google.api.client.util.Key private java.lang.Boolean privateIpOnly;
 
@@ -93,7 +93,7 @@ public final class GoogleCloudDataplexV1TaskInfrastructureSpecVpcNetwork
   /**
    * Optional. Whether the compute resources allocated to run the job have internal/ private IPs. By
    * default, the VMs have a public IP.
-   * Note: As a part of Uld customization, we are overriding this to always use private IP
+   * //Note: As a part of Uld customization, we are overriding this to always use private IP
    *
    * @return value or {@code null} for none
    */
