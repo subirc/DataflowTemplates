@@ -60,7 +60,7 @@ class ChangelogTableDynamicDestinations extends DynamicDestinations<TableRow, St
   /**
    * Convert a CDC source-provided table name (i.e. "${instance}.${database}.${table}") into the
    * table name to add into BigQuery (i.e. "${table}"), or changelog table name (i.e.
-   * "${table}_changelog").
+   * "${table}_changelog"). NOTE: we are not using changelog tables as a part of heat-uld customization
    *
    * @param sourceTable the fully qualified table name coming from MySQL.
    * @param isChangelogTable tells whether the Table name is a Change Log table, or a plain table.
@@ -70,7 +70,7 @@ class ChangelogTableDynamicDestinations extends DynamicDestinations<TableRow, St
     String[] tableNameComponents = sourceTable.split("\\.");
     LOG.debug("Source table: {}. After split: {}", sourceTable, tableNameComponents);
     if (isChangelogTable) {
-      return String.format("%s_changelog", tableNameComponents[2]);
+      return String.format("%s", tableNameComponents[2]);
     } else {
       return tableNameComponents[2];
     }
@@ -83,13 +83,14 @@ class ChangelogTableDynamicDestinations extends DynamicDestinations<TableRow, St
 
     // The input targetTable comes from Debezium as "${instance}.${database}.${table}".
     // We extract the table name, and append "_changelog" to it: "${table}_changelog".
+    // Note: the change will not be appended and a dataset will pre-exist.
     String targetTable = (String) o;
     return targetTable;
   }
 
   @Override
   public TableDestination getTable(String targetTable) {
-    String changelogTableName = getBigQueryTableName(targetTable, true);
+    String changelogTableName = getBigQueryTableName(targetTable, false);
 
     TableReference tableRef =
         new TableReference()
@@ -97,7 +98,6 @@ class ChangelogTableDynamicDestinations extends DynamicDestinations<TableRow, St
             .setDatasetId(changeLogDataset)
             .setProjectId(gcpProjectId);
     String description = String.format("Changelog Table for {}", targetTable);
-
     return new TableDestination(tableRef, description);
   }
 
