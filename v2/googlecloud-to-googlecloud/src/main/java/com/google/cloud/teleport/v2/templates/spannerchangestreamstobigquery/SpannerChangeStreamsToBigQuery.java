@@ -74,14 +74,14 @@ import org.slf4j.LoggerFactory;
  * inserted into BigQuery table.
  */
 @Template(
-    name = "Spanner_Change_Streams_to_BigQuery",
+    name = "Uld_Spanner_Change_Streams_to_BigQuery",
     category = TemplateCategory.STREAMING,
-    displayName = "Cloud Spanner change streams to BigQuery",
+    displayName = "Cloud Spanner change streams to BigQuery for Uld database",
     description =
         "Streaming pipeline. Streams Spanner data change records and writes them into BigQuery"
             + " using Dataflow Runner V2.",
     optionsClass = SpannerChangeStreamsToBigQueryOptions.class,
-    flexContainerName = "spanner-changestreams-to-bigquery",
+    flexContainerName = "uld-spanner-changestreams-to-bigquery",
     contactInformation = "https://cloud.google.com/support")
 public final class SpannerChangeStreamsToBigQuery {
 
@@ -257,6 +257,7 @@ public final class SpannerChangeStreamsToBigQuery {
                 .setBigQueryDataset(options.getBigQueryDataset())
                 .setBigQueryTableTemplate(options.getBigQueryChangelogTableNameTemplate())
                 .build();
+    //Note: Changing CreateDisposition to CREATE_NEVER as we will create our own partitioned datasets
     WriteResult writeResult =
         tableRowTuple
             .get(failsafeModJsonToTableRow.transformOut)
@@ -266,7 +267,7 @@ public final class SpannerChangeStreamsToBigQuery {
                     .to(BigQueryDynamicDestinations.of(bigQueryDynamicDestinationsOptions))
                     .withFormatFunction(element -> removeIntermediateMetadataFields(element))
                     .withFormatRecordOnFailureFunction(element -> element)
-                    .withCreateDisposition(CreateDisposition.CREATE_IF_NEEDED)
+                    .withCreateDisposition(CreateDisposition.CREATE_NEVER)
                     .withWriteDisposition(Write.WriteDisposition.WRITE_APPEND)
                     .withExtendedErrorInfo()
                     .withFailedInsertRetryPolicy(InsertRetryPolicy.retryTransientErrors()));
@@ -368,19 +369,26 @@ public final class SpannerChangeStreamsToBigQuery {
     public void process(@Element DataChangeRecord input, OutputReceiver<String> receiver) {
       for (org.apache.beam.sdk.io.gcp.spanner.changestreams.model.Mod changeStreamsMod :
           input.getMods()) {
-        Mod mod =
-            new Mod(
+//        Mod mod =
+//            new Mod(
+//                changeStreamsMod.getKeysJson(),
+//                changeStreamsMod.getNewValuesJson(),
+//                input.getCommitTimestamp(),
+//                input.getServerTransactionId(),
+//                input.isLastRecordInTransactionInPartition(),
+//                input.getRecordSequence(),
+//                input.getTableName(),
+//                input.getModType(),
+//                input.getValueCaptureType(),
+//                input.getNumberOfRecordsInTransaction(),
+//                input.getNumberOfPartitionsInTransaction());
+
+        // Note: We donot need any of the metadata as we are not capturing them
+        Mod mod = new Mod(
                 changeStreamsMod.getKeysJson(),
                 changeStreamsMod.getNewValuesJson(),
-                input.getCommitTimestamp(),
-                input.getServerTransactionId(),
-                input.isLastRecordInTransactionInPartition(),
-                input.getRecordSequence(),
-                input.getTableName(),
                 input.getModType(),
-                input.getValueCaptureType(),
-                input.getNumberOfRecordsInTransaction(),
-                input.getNumberOfPartitionsInTransaction());
+                input.getValueCaptureType());
 
         String modJsonString;
 
