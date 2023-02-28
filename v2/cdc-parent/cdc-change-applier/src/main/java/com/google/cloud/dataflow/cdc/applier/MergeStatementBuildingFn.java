@@ -114,7 +114,7 @@ public class MergeStatementBuildingFn
         ChangelogTableDynamicDestinations.getBigQueryTableName(tableAndSchemas.getKey(), false);
 
     String changeLogTableName =
-        ChangelogTableDynamicDestinations.getBigQueryTableName(tableAndSchemas.getKey(), true);
+        ChangelogTableDynamicDestinations.getBigQueryTableName(tableAndSchemas.getKey(), false);
 
     Schema primaryKeySchema = tableAndSchemas.getValue().getKey();
     List<String> pkColumnNames =
