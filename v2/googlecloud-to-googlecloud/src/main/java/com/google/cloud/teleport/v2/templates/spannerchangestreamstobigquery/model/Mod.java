@@ -107,6 +107,14 @@ public final class Mod implements Serializable {
     this.numberOfPartitionsInTransaction = numberOfPartitionsInTransaction;
   }
 
+  public Mod(String keysJson, String newValuesJson, ModType modType,
+             ValueCaptureType valueCaptureType) {
+    this.keysJson = keysJson;
+    this.newValuesJson = newValuesJson;
+    this.modType = modType;
+    this.valueCaptureType = valueCaptureType;
+  }
+
   public static Mod fromJson(String json) throws IOException {
     return new ObjectMapper().readValue(json, Mod.class);
   }
