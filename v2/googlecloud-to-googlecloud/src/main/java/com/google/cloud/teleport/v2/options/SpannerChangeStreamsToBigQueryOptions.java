@@ -32,9 +32,8 @@ public interface SpannerChangeStreamsToBigQueryOptions extends DataflowPipelineO
       optional = true,
       description = "Spanner Project ID",
       helpText =
-          "Project to read change streams from. The default for this parameter is the project "
-              + "where the Dataflow pipeline is running.")
-  @Default.String("")
+          "Project to read change streams from. Default is the project for the Dataflow job.")
+  @Default.String("gcp-heat-<env>")
   String getSpannerProjectId();
 
   void setSpannerProjectId(String projectId);
@@ -170,7 +169,7 @@ public interface SpannerChangeStreamsToBigQueryOptions extends DataflowPipelineO
       optional = true,
       description = "BigQuery table name Template",
       helpText = "The Template for the BigQuery table name that contains the change log")
-  @Default.String("{_metadata_spanner_table_name}_changelog")
+  @Default.String("{_metadata_spanner_table_name}")
   String getBigQueryChangelogTableNameTemplate();
 
   void setBigQueryChangelogTableNameTemplate(String value);
@@ -203,7 +202,7 @@ public interface SpannerChangeStreamsToBigQueryOptions extends DataflowPipelineO
       description = "Fields to be ignored",
       helpText =
           "Comma separated list of fields to be ignored, these could be fields of tracked tables, "
-              + "or metadata fields which are _metadata_spanner_mod_type, "
+              + "or metadata fields which are _metadata_spanner_mod_type(or _mod_type), "
               + "_metadata_spanner_table_name, "
               + "_metadata_spanner_commit_timestamp, "
               + "_metadata_spanner_server_transaction_id, "
