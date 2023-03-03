@@ -33,9 +33,8 @@ public interface SpannerChangeStreamsToBigQueryOptions
       optional = true,
       description = "Spanner Project ID",
       helpText =
-          "Project to read change streams from. The default for this parameter is the project "
-              + "where the Dataflow pipeline is running.")
-  @Default.String("")
+          "Project to read change streams from. Default is the project for the Dataflow job.")
+  @Default.String("gcp-heat-<env>")
   String getSpannerProjectId();
 
   void setSpannerProjectId(String projectId);
