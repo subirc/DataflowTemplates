@@ -30,7 +30,8 @@ public class BigQueryUtils {
   // in com.google.cloud.teleport.v2.cdc.dlq.FileBasedDeadLetterQueueReconsumer and use them here.
   public static final String BQ_CHANGELOG_FIELD_NAME_ERROR = "_metadata_error";
   public static final String BQ_CHANGELOG_FIELD_NAME_RETRY_COUNT = "_metadata_retry_count";
-  public static final String BQ_CHANGELOG_FIELD_NAME_MOD_TYPE = "_metadata_spanner_mod_type";
+  // public static final String BQ_CHANGELOG_FIELD_NAME_MOD_TYPE = "_metadata_spanner_mod_type";
+  public static final String BQ_CHANGELOG_FIELD_NAME_MOD_TYPE = "_mod_type";
   public static final String BQ_CHANGELOG_FIELD_NAME_TABLE_NAME = "_metadata_spanner_table_name";
   public static final String BQ_CHANGELOG_FIELD_NAME_SPANNER_COMMIT_TIMESTAMP =
       "_metadata_spanner_commit_timestamp";
@@ -68,7 +69,7 @@ public class BigQueryUtils {
     tableRow.set(BQ_CHANGELOG_FIELD_NAME_ORIGINAL_PAYLOAD_JSON, modJsonString);
     tableRow.set(BQ_CHANGELOG_FIELD_NAME_MOD_TYPE, mod.getModType().name());
 
-    // Note: The metadata fields are ignored for now as a part of the Uld customization
+    // The metadata fields are ignored for now as a part of the Uld customization
     //    tableRow.set(BQ_CHANGELOG_FIELD_NAME_TABLE_NAME, spannerTableName);
     //    tableRow.set(
     //        BQ_CHANGELOG_FIELD_NAME_SPANNER_COMMIT_TIMESTAMP, spannerCommitTimestamp.toString());
