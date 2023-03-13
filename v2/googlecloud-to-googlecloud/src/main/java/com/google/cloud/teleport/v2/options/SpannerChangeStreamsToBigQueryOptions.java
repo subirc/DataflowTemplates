@@ -25,15 +25,17 @@ import org.apache.beam.sdk.options.Validation;
  * The {@link SpannerChangeStreamsToBigQueryOptions} class provides the custom execution options
  * passed by the executor at the command-line.
  */
-public interface SpannerChangeStreamsToBigQueryOptions extends DataflowPipelineOptions {
+public interface SpannerChangeStreamsToBigQueryOptions
+    extends DataflowPipelineOptions, BigQueryStorageApiStreamingOptions {
 
   @TemplateParameter.ProjectId(
       order = 1,
       optional = true,
       description = "Spanner Project ID",
       helpText =
-          "Project to read change streams from. Default is the project for the Dataflow job.")
-  @Default.String("gcp-heat-<env>")
+          "Project to read change streams from. The default for this parameter is the project "
+              + "where the Dataflow pipeline is running.")
+  @Default.String("")
   String getSpannerProjectId();
 
   void setSpannerProjectId(String projectId);

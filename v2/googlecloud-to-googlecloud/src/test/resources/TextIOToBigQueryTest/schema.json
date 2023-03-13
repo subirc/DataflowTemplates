@@ -7,6 +7,21 @@
     {
       "name": "TITLE",
       "type": "STRING"
+    },
+    {
+      "name": "DETAILS",
+      "type": "RECORD",
+      "mode": "NULLABLE",
+      "fields": [
+        {
+          "name": "YEAR",
+          "type": "INTEGER"
+        },
+        {
+          "name": "SUMMARY",
+          "type": "STRING"
+        }
+      ]
     }
   ]
 }

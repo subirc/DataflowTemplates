@@ -74,14 +74,14 @@ import org.slf4j.LoggerFactory;
  * inserted into BigQuery table.
  */
 @Template(
-    name = "Uld_Spanner_Change_Streams_to_BigQuery",
+    name = "Spanner_Change_Streams_to_BigQuery",
     category = TemplateCategory.STREAMING,
-    displayName = "Cloud Spanner change streams to BigQuery for Uld database",
+    displayName = "Cloud Spanner change streams to BigQuery",
     description =
         "Streaming pipeline. Streams Spanner data change records and writes them into BigQuery"
             + " using Dataflow Runner V2.",
     optionsClass = SpannerChangeStreamsToBigQueryOptions.class,
-    flexContainerName = "uld-spanner-changestreams-to-bigquery",
+    flexContainerName = "spanner-changestreams-to-bigquery",
     contactInformation = "https://cloud.google.com/support")
 public final class SpannerChangeStreamsToBigQuery {
 
