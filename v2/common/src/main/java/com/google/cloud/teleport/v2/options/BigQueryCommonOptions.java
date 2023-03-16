@@ -60,8 +60,7 @@ public final class BigQueryCommonOptions {
         enumOptions = {"CREATE_IF_NEEDED", "CREATE_NEVER"},
         optional = true,
         description = "Create Disposition to use for BigQuery",
-        helpText = "BigQuery CreateDisposition. For example, CREATE_IF_NEEDED, CREATE_NEVER. " +
-                "In our case, a partitioned table will be created for us beforehand")
+        helpText = "BigQuery CreateDisposition. For example, CREATE_IF_NEEDED, CREATE_NEVER. Defaults to CREATE_NEVER")
     @Default.String("CREATE_NEVER")
     String getCreateDisposition();
 
