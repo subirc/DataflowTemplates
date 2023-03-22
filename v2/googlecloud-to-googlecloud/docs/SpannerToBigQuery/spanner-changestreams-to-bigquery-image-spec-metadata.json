@@ -17,8 +17,8 @@
       "paramType": "TEXT"
     },
     {
-      "name": "spannerDatabaseId",
-      "label": "Spanner database ID",
+      "name": "spannerDatabase",
+      "label": "Spanner database",
       "helpText": "The Spanner database to read change streams from.",
       "isOptional": false,
       "paramType": "TEXT"
@@ -31,8 +31,8 @@
       "paramType": "TEXT"
     },
     {
-      "name": "spannerMetadataDatabaseId",
-      "label": "Spanner metadata database ID",
+      "name": "spannerMetadataDatabase",
+      "label": "Spanner metadata database",
       "helpText": "The Spanner database to use for the change stream metadata table.",
       "isOptional": false,
       "paramType": "TEXT"
