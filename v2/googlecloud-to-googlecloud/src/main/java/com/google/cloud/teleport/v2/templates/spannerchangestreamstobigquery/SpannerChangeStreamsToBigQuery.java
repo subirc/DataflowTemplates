@@ -215,6 +215,7 @@ public final class SpannerChangeStreamsToBigQuery {
                       }
                     }))
             .setCoder(FAILSAFE_ELEMENT_CODER);
+    LOG.warn("sourceFailsafeModJson = "+ sourceFailsafeModJson.getName());
 
     PCollectionTuple dlqModJson =
         dlqManager.getReconsumerDataTransform(
@@ -229,6 +230,7 @@ public final class SpannerChangeStreamsToBigQuery {
 
     ImmutableSet.Builder<String> ignoreFieldsBuilder = ImmutableSet.builder();
     for (String ignoreField : options.getIgnoreFields().split(",")) {
+      LOG.warn("ignoreField in loop= "+ignoreField);
       ignoreFieldsBuilder.add(ignoreField);
     }
     ImmutableSet<String> ignoreFields = ignoreFieldsBuilder.build();
@@ -246,7 +248,8 @@ public final class SpannerChangeStreamsToBigQuery {
 
     PCollectionTuple tableRowTuple =
         failsafeModJson.apply("Mod JSON To TableRow", failsafeModJsonToTableRow);
-
+    LOG.warn("failsafeModJsonToTableRow= "+failsafeModJsonToTableRow.toString());
+    LOG.warn("getBigQueryChangelogTableNameTemplate = "+options.getBigQueryChangelogTableNameTemplate());
     BigQueryDynamicDestinations.BigQueryDynamicDestinationsOptions
         bigQueryDynamicDestinationsOptions =
             BigQueryDynamicDestinations.BigQueryDynamicDestinationsOptions.builder()
@@ -271,7 +274,7 @@ public final class SpannerChangeStreamsToBigQuery {
                     .withWriteDisposition(Write.WriteDisposition.WRITE_APPEND)
                     .withExtendedErrorInfo()
                     .withFailedInsertRetryPolicy(InsertRetryPolicy.retryTransientErrors()));
-
+    LOG.warn("writeResult = "+writeResult.toString());
     PCollection<String> transformDlqJson =
         tableRowTuple
             .get(failsafeModJsonToTableRow.transformDeadLetterOut)
@@ -369,26 +372,26 @@ public final class SpannerChangeStreamsToBigQuery {
     public void process(@Element DataChangeRecord input, OutputReceiver<String> receiver) {
       for (org.apache.beam.sdk.io.gcp.spanner.changestreams.model.Mod changeStreamsMod :
           input.getMods()) {
-//        Mod mod =
-//            new Mod(
-//                changeStreamsMod.getKeysJson(),
-//                changeStreamsMod.getNewValuesJson(),
-//                input.getCommitTimestamp(),
-//                input.getServerTransactionId(),
-//                input.isLastRecordInTransactionInPartition(),
-//                input.getRecordSequence(),
-//                input.getTableName(),
-//                input.getModType(),
-//                input.getValueCaptureType(),
-//                input.getNumberOfRecordsInTransaction(),
-//                input.getNumberOfPartitionsInTransaction());
-
-        // Note: We donot need any of the metadata as we are not capturing them
-        Mod mod = new Mod(
+        Mod mod =
+            new Mod(
                 changeStreamsMod.getKeysJson(),
                 changeStreamsMod.getNewValuesJson(),
+                input.getCommitTimestamp(),
+                input.getServerTransactionId(),
+                input.isLastRecordInTransactionInPartition(),
+                input.getRecordSequence(),
+                input.getTableName(),
                 input.getModType(),
-                input.getValueCaptureType());
+                input.getValueCaptureType(),
+                input.getNumberOfRecordsInTransaction(),
+                input.getNumberOfPartitionsInTransaction());
+
+        // Note: We donot need any of the metadata as we are not capturing them
+//        Mod mod = new Mod(
+//                changeStreamsMod.getKeysJson(),
+//                changeStreamsMod.getNewValuesJson(),
+//                input.getModType(),
+//                input.getValueCaptureType());
 
         String modJsonString;
 
@@ -398,6 +401,7 @@ public final class SpannerChangeStreamsToBigQuery {
           // Ignore exception and print bad format.
           modJsonString = String.format("\"%s\"", input);
         }
+        LOG.warn("modJsonString = "+modJsonString);
         receiver.output(modJsonString);
       }
     }
