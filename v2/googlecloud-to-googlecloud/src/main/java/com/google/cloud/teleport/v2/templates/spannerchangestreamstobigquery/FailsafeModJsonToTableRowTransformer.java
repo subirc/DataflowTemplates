@@ -163,6 +163,7 @@ public final class FailsafeModJsonToTableRowTransformer {
         spannerTableByName =
             new SpannerUtils(spannerAccessor.getDatabaseClient(), spannerChangeStream, dialect)
                 .getSpannerTableByName();
+        LOG.warn("spannerTableByName="+spannerTableByName);
         setUpCallContextConfigurator();
       }
 
@@ -179,6 +180,7 @@ public final class FailsafeModJsonToTableRowTransformer {
           TableRow tableRow = modJsonStringToTableRow(failsafeModJsonString.getPayload());
           for (String ignoreField : ignoreFields) {
             if (tableRow.containsKey(ignoreField)) {
+              LOG.warn("removed "+ignoreField+" from "+ tableRow.values());
               tableRow.remove(ignoreField);
             }
           }
@@ -193,6 +195,7 @@ public final class FailsafeModJsonToTableRowTransformer {
       }
 
       private TableRow modJsonStringToTableRow(String modJsonString) throws Exception {
+        LOG.warn("modJsonString = " + modJsonString);
         ObjectNode modObjectNode = (ObjectNode) new ObjectMapper().readTree(modJsonString);
         for (String excludeFieldName : BigQueryUtils.getBigQueryIntermediateMetadataFieldNames()) {
           if (modObjectNode.has(excludeFieldName)) {
@@ -201,7 +204,9 @@ public final class FailsafeModJsonToTableRowTransformer {
         }
 
         Mod mod = Mod.fromJson(modObjectNode.toString());
+        LOG.warn("mod = " + mod.toString());
         String spannerTableName = mod.getTableName();
+        LOG.warn("spannerTableName = " + spannerTableName);
         TrackedSpannerTable spannerTable = spannerTableByName.get(spannerTableName);
         com.google.cloud.Timestamp spannerCommitTimestamp =
             com.google.cloud.Timestamp.ofTimeSecondsAndNanos(

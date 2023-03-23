@@ -40,6 +40,8 @@ import org.apache.beam.sdk.io.gcp.spanner.SpannerAccessor;
 import org.apache.beam.sdk.io.gcp.spanner.SpannerConfig;
 import org.apache.beam.sdk.values.KV;
 import org.apache.beam.sdk.values.ValueInSingleWindow;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The {@link BigQueryDynamicDestinations} loads into BigQuery tables in a dynamic fashion. The
@@ -47,6 +49,9 @@ import org.apache.beam.sdk.values.ValueInSingleWindow;
  */
 public final class BigQueryDynamicDestinations
     extends DynamicDestinations<TableRow, KV<TableId, TableRow>> {
+
+  private static final Logger LOG =
+          LoggerFactory.getLogger(BigQueryDynamicDestinations.class);
 
   private final Map<String, TrackedSpannerTable> spannerTableByName;
   private final String bigQueryProject, bigQueryDataset, bigQueryTableTemplate;
@@ -96,7 +101,7 @@ public final class BigQueryDynamicDestinations
     TableId tableId = getTableId(bigQueryTableTemplate, destination.getValue());
     String tableName =
         String.format("%s:%s.%s", tableId.getProject(), tableId.getDataset(), tableId.getTable());
-
+    LOG.warn("table name ="+tableName);
     return new TableDestination(tableName, "BigQuery changelog table.");
   }
 
@@ -105,6 +110,7 @@ public final class BigQueryDynamicDestinations
     TableRow tableRow = destination.getValue();
     String spannerTableName =
         (String) tableRow.get(BigQueryUtils.BQ_CHANGELOG_FIELD_NAME_TABLE_NAME);
+    LOG.warn("spannerTableName = " + spannerTableName);
     TrackedSpannerTable spannerTable = spannerTableByName.get(spannerTableName);
     List<TableFieldSchema> fields = getFields(spannerTable);
     List<TableFieldSchema> filteredFields = new ArrayList<>();
