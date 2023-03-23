@@ -55,13 +55,20 @@
       "name": "network",
       "label": "The Cloud VPC network in which the job is run.",
       "helpText": "Network to which workers will be assigned. If empty or unspecified, the service will use the network \"default\".",
-      "isOptional": false,
+      "isOptional": true,
       "paramType": "TEXT"
     },
     {
       "name": "subnetwork",
       "label": "The Cloud VPC sub-network in which the job is run.",
       "helpText": "Subnetwork to which workers will be assigned, if desired. Value can be either a complete URL or an abbreviated path. If the subnetwork is located in a Shared VPC network, you must use the complete URL",
+      "isOptional": true,
+      "paramType": "TEXT"
+    },
+    {
+      "name": "ignoreFields",
+      "label": "Fields to be ignored",
+      "helpText": "Comma separated list of fields to be ignored, ex- metadata fields",
       "isOptional": false,
       "paramType": "TEXT"
     }
