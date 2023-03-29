@@ -68,19 +68,20 @@ public class BigQueryUtils {
     tableRow.set(BQ_CHANGELOG_FIELD_NAME_ORIGINAL_PAYLOAD_JSON, modJsonString);
     tableRow.set(BQ_CHANGELOG_FIELD_NAME_MOD_TYPE, mod.getModType().name());
     tableRow.set(BQ_CHANGELOG_FIELD_NAME_TABLE_NAME, spannerTableName);
-    tableRow.set(
-        BQ_CHANGELOG_FIELD_NAME_SPANNER_COMMIT_TIMESTAMP, spannerCommitTimestamp.toString());
-    tableRow.set(BQ_CHANGELOG_FIELD_NAME_SERVER_TRANSACTION_ID, mod.getServerTransactionId());
-    tableRow.set(BQ_CHANGELOG_FIELD_NAME_RECORD_SEQUENCE, mod.getRecordSequence());
-    tableRow.set(
-        BQ_CHANGELOG_FIELD_NAME_IS_LAST_RECORD_IN_TRANSACTION_IN_PARTITION,
-        mod.getIsLastRecordInTransactionInPartition());
-    tableRow.set(
-        BQ_CHANGELOG_FIELD_NAME_NUMBER_OF_RECORDS_IN_TRANSACTION,
-        mod.getNumberOfRecordsInTransaction());
-    tableRow.set(
-        BQ_CHANGELOG_FIELD_NAME_NUMBER_OF_PARTITIONS_IN_TRANSACTION,
-        mod.getNumberOfPartitionsInTransaction());
-    tableRow.set(BigQueryUtils.BQ_CHANGELOG_FIELD_NAME_BIGQUERY_COMMIT_TIMESTAMP, "AUTO");
+    //Note: these metadata fields are not required and should not be set
+//    tableRow.set(
+//        BQ_CHANGELOG_FIELD_NAME_SPANNER_COMMIT_TIMESTAMP, spannerCommitTimestamp.toString());
+//    tableRow.set(BQ_CHANGELOG_FIELD_NAME_SERVER_TRANSACTION_ID, mod.getServerTransactionId());
+//    tableRow.set(BQ_CHANGELOG_FIELD_NAME_RECORD_SEQUENCE, mod.getRecordSequence());
+//    tableRow.set(
+//        BQ_CHANGELOG_FIELD_NAME_IS_LAST_RECORD_IN_TRANSACTION_IN_PARTITION,
+//        mod.getIsLastRecordInTransactionInPartition());
+//    tableRow.set(
+//        BQ_CHANGELOG_FIELD_NAME_NUMBER_OF_RECORDS_IN_TRANSACTION,
+//        mod.getNumberOfRecordsInTransaction());
+//    tableRow.set(
+//        BQ_CHANGELOG_FIELD_NAME_NUMBER_OF_PARTITIONS_IN_TRANSACTION,
+//        mod.getNumberOfPartitionsInTransaction());
+//    tableRow.set(BigQueryUtils.BQ_CHANGELOG_FIELD_NAME_BIGQUERY_COMMIT_TIMESTAMP, "AUTO");
   }
 }
