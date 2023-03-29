@@ -1,0 +1,76 @@
+{
+  "name": "Spanner change streams to BigQuery",
+  "description": "Streaming pipeline. Streams change stream records and writes them into BigQuery dataset/s. Note the created pipeline will run on Dataflow Runner V2",
+  "parameters": [
+    {
+      "name": "spannerProjectId",
+      "label": "Spanner Project ID",
+      "helpText": "Project to read change streams from. The default for this parameter is the project where the Dataflow pipeline is running.",
+      "isOptional": true,
+      "paramType": "TEXT"
+    },
+    {
+      "name": "spannerInstanceId",
+      "label": "Spanner Instance ID",
+      "helpText": "The Spanner instance for the Spanner table.",
+      "isOptional": false,
+      "paramType": "TEXT"
+    },
+    {
+      "name": "spannerDatabase",
+      "label": "Spanner database",
+      "helpText": "The Spanner database to read change streams from.",
+      "isOptional": false,
+      "paramType": "TEXT"
+    },
+    {
+      "name": "spannerMetadataInstanceId",
+      "label": "Spanner metadata instance ID",
+      "helpText": "The Spanner instance to use for the change stream metadata table.",
+      "isOptional": false,
+      "paramType": "TEXT"
+    },
+    {
+      "name": "spannerMetadataDatabase",
+      "label": "Spanner metadata database",
+      "helpText": "The Spanner database to use for the change stream metadata table.",
+      "isOptional": false,
+      "paramType": "TEXT"
+    },
+    {
+      "name": "bigQueryDataset",
+      "label": "BigQuery dataset",
+      "helpText": "The BigQuery dataset for change streams output.",
+      "isOptional": false,
+      "paramType": "TEXT"
+    },
+    {
+      "name": "spannerChangeStreamName",
+      "label": "Spanner change stream",
+      "helpText": "The Spanner change stream to read from.",
+      "isOptional": false,
+      "paramType": "TEXT"
+    },
+    {
+      "name": "network",
+      "label": "The Cloud VPC network in which the job is run.",
+      "helpText": "Network to which workers will be assigned. If empty or unspecified, the service will use the network \"default\".",
+      "isOptional": true,
+      "paramType": "TEXT"
+    },
+    {
+      "name": "subnetwork",
+      "label": "The Cloud VPC sub-network in which the job is run.",
+      "helpText": "Subnetwork to which workers will be assigned, if desired. Value can be either a complete URL or an abbreviated path. If the subnetwork is located in a Shared VPC network, you must use the complete URL",
+      "isOptional": true,
+      "paramType": "TEXT"
+    },
+    {
+      "name": "ignoreFields",
+      "label": "Fields to be ignored",
+      "helpText": "Comma separated list of fields to be ignored, ex- metadata fields",
+      "isOptional": true,
+      "paramType": "TEXT"
+    }
+  ]
+}
