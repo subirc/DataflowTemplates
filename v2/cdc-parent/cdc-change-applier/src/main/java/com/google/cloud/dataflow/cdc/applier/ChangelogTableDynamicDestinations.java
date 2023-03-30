@@ -70,8 +70,7 @@ class ChangelogTableDynamicDestinations extends DynamicDestinations<TableRow, St
     String[] tableNameComponents = sourceTable.split("\\.");
     LOG.debug("Source table: {}. After split: {}", sourceTable, tableNameComponents);
     if (isChangelogTable) {
-      //return String.format("%s_changelog", tableNameComponents[2]);
-      return String.format("%s", tableNameComponents[2]);
+      return String.format("%s_changelog", tableNameComponents[2]);
     } else {
       return tableNameComponents[2];
     }
