@@ -133,42 +133,44 @@ public final class BigQueryDynamicDestinations
             .setName(BigQueryUtils.BQ_CHANGELOG_FIELD_NAME_TABLE_NAME)
             .setType(StandardSQLTypeName.STRING.name())
             .setMode(requiredMode));
-    fields.add(
-        new TableFieldSchema()
-            .setName(BigQueryUtils.BQ_CHANGELOG_FIELD_NAME_SPANNER_COMMIT_TIMESTAMP)
-            .setType(StandardSQLTypeName.TIMESTAMP.name())
-            .setMode(requiredMode));
-    fields.add(
-        new TableFieldSchema()
-            .setName(BigQueryUtils.BQ_CHANGELOG_FIELD_NAME_SERVER_TRANSACTION_ID)
-            .setType(StandardSQLTypeName.STRING.name())
-            .setMode(requiredMode));
-    fields.add(
-        new TableFieldSchema()
-            .setName(BigQueryUtils.BQ_CHANGELOG_FIELD_NAME_RECORD_SEQUENCE)
-            .setType(StandardSQLTypeName.STRING.name())
-            .setMode(requiredMode));
-    fields.add(
-        new TableFieldSchema()
-            .setName(
-                BigQueryUtils.BQ_CHANGELOG_FIELD_NAME_IS_LAST_RECORD_IN_TRANSACTION_IN_PARTITION)
-            .setType(StandardSQLTypeName.BOOL.name())
-            .setMode(requiredMode));
-    fields.add(
-        new TableFieldSchema()
-            .setName(BigQueryUtils.BQ_CHANGELOG_FIELD_NAME_NUMBER_OF_RECORDS_IN_TRANSACTION)
-            .setType(StandardSQLTypeName.INT64.name())
-            .setMode(requiredMode));
-    fields.add(
-        new TableFieldSchema()
-            .setName(BigQueryUtils.BQ_CHANGELOG_FIELD_NAME_NUMBER_OF_PARTITIONS_IN_TRANSACTION)
-            .setType(StandardSQLTypeName.INT64.name())
-            .setMode(requiredMode));
-    fields.add(
-        new TableFieldSchema()
-            .setName(BigQueryUtils.BQ_CHANGELOG_FIELD_NAME_BIGQUERY_COMMIT_TIMESTAMP)
-            .setType(StandardSQLTypeName.TIMESTAMP.name())
-            .setMode(requiredMode));
+//    Note: template customization - these metadata fields are not required. But there is a ignoreField param as well
+//            which is not working in the base template.
+//    fields.add(
+//        new TableFieldSchema()
+//            .setName(BigQueryUtils.BQ_CHANGELOG_FIELD_NAME_SPANNER_COMMIT_TIMESTAMP)
+//            .setType(StandardSQLTypeName.TIMESTAMP.name())
+//            .setMode(requiredMode));
+//    fields.add(
+//        new TableFieldSchema()
+//            .setName(BigQueryUtils.BQ_CHANGELOG_FIELD_NAME_SERVER_TRANSACTION_ID)
+//            .setType(StandardSQLTypeName.STRING.name())
+//            .setMode(requiredMode));
+//    fields.add(
+//        new TableFieldSchema()
+//            .setName(BigQueryUtils.BQ_CHANGELOG_FIELD_NAME_RECORD_SEQUENCE)
+//            .setType(StandardSQLTypeName.STRING.name())
+//            .setMode(requiredMode));
+//    fields.add(
+//        new TableFieldSchema()
+//            .setName(
+//                BigQueryUtils.BQ_CHANGELOG_FIELD_NAME_IS_LAST_RECORD_IN_TRANSACTION_IN_PARTITION)
+//            .setType(StandardSQLTypeName.BOOL.name())
+//            .setMode(requiredMode));
+//    fields.add(
+//        new TableFieldSchema()
+//            .setName(BigQueryUtils.BQ_CHANGELOG_FIELD_NAME_NUMBER_OF_RECORDS_IN_TRANSACTION)
+//            .setType(StandardSQLTypeName.INT64.name())
+//            .setMode(requiredMode));
+//    fields.add(
+//        new TableFieldSchema()
+//            .setName(BigQueryUtils.BQ_CHANGELOG_FIELD_NAME_NUMBER_OF_PARTITIONS_IN_TRANSACTION)
+//            .setType(StandardSQLTypeName.INT64.name())
+//            .setMode(requiredMode));
+//    fields.add(
+//        new TableFieldSchema()
+//            .setName(BigQueryUtils.BQ_CHANGELOG_FIELD_NAME_BIGQUERY_COMMIT_TIMESTAMP)
+//            .setType(StandardSQLTypeName.TIMESTAMP.name())
+//            .setMode(requiredMode));
 
     return fields;
   }

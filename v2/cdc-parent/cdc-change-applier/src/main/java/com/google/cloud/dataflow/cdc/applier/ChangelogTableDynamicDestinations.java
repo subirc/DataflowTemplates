@@ -69,11 +69,13 @@ class ChangelogTableDynamicDestinations extends DynamicDestinations<TableRow, St
   public static String getBigQueryTableName(String sourceTable, Boolean isChangelogTable) {
     String[] tableNameComponents = sourceTable.split("\\.");
     LOG.debug("Source table: {}. After split: {}", sourceTable, tableNameComponents);
-    if (isChangelogTable) {
-      return String.format("%s_changelog", tableNameComponents[2]);
-    } else {
-      return tableNameComponents[2];
-    }
+//    Note: template customization - we do not need the _changelog appended to name
+//    if (isChangelogTable) {
+//      return String.format("%s_changelog", tableNameComponents[2]);
+//    } else {
+//      return tableNameComponents[2];
+//    }
+    return tableNameComponents[2];
   }
 
   @Override
